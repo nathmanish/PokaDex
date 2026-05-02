@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_server_title">Server Error</string>
+    <string name="error_server_message">We encountered an issue communicating with the server. Please try again later.</string>
+
+    <string name="error_no_data_title">No Data Found</string>
+    <string name="error_no_data_message">We couldn\'t find any data. Please check your search criteria or try again.</string>
+
+    <string name="error_no_internet_title">No Internet Connection</string>
+    <string name="error_no_internet_message">Please check your internet connection and try again.</string>
+
+    <string name="error_unknown_title">Unknown Error</string>
+    <string name="error_unknown_message">An unexpected error occurred. Please try again. If the problem persists, contact support.</string>
+
+</resources>
