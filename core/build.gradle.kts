@@ -61,10 +61,13 @@ dependencies {
 
     api(libs.kotlinx.serialization.json)
 
-    api("com.squareup.retrofit2:converter-gson:2.9.0")
+    api(libs.converter.gson)
 
     api(libs.coil.compose)
     api(libs.coil.network.okhttp)
+
+    api(libs.androidx.paging.common)
+    api(libs.androidx.paging.compose)
 
 
     testImplementation(libs.junit)

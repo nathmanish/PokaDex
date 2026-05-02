@@ -6,7 +6,7 @@ import coil3.compose.AsyncImage
 
 @Composable
 fun UrlImage(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     url: String,
 ) {
     AsyncImage(

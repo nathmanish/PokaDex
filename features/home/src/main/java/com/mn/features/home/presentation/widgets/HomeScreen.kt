@@ -1,54 +1,51 @@
 package com.mn.features.home.presentation.widgets
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mn.features.home.presentation.activity.HomeActivityViewModel
-import com.mn.features.home.presentation.activity.HomeUiState
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.mn.features.home.presentation.activity.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    vm: HomeActivityViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    Scaffold(modifier = Modifier.fillMaxWidth()) { innerPadding ->
+    Scaffold { innerPadding ->
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center
         ) {
-            val uiState by vm.homeUiState.collectAsStateWithLifecycle()
-            when (uiState) {
-                HomeUiState.Loading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+            val pokeListPagingData = homeViewModel.pokeListPagingData.collectAsLazyPagingItems()
+
+            when (pokeListPagingData.loadState.refresh) {
+                is LoadState.Loading -> {
+                    CircularProgressIndicator()
+                }
+
+                is LoadState.Error -> {
+                    Text("Something went wrong")
+                }
+
+                is LoadState.NotLoading -> {
+                    if (!pokeListPagingData.itemSnapshotList.isEmpty()) {
+                        PokeGridWidget(
+                            pokeListPagingData
+                        )
+                    } else {
+                        Text("No Data found")
                     }
                 }
-
-                is HomeUiState.Success -> {
-                    PokeListWidget(
-                        modifier = Modifier,
-                        (uiState as HomeUiState.Success).items
-                    )
-                }
-
-                is HomeUiState.Failure -> {
-
-                }
-
-                else -> {}
-
             }
         }
     }
