@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface PokeApiService {
     @GET(".")
     suspend fun getPokeList(
-        @Query("offset") page: Long,
+        @Query("offset") page: Int,
         @Query("limit") perPage: Int
     ): Response<PokeListResponse>
 }

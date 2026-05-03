@@ -23,4 +23,5 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providesErrorResponseMapper(): ErrorResponseMapper = ErrorResponseMapper()
+
 }

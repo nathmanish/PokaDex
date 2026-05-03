@@ -69,6 +69,9 @@ dependencies {
     api(libs.androidx.paging.common)
     api(libs.androidx.paging.compose)
 
+    api(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    api(libs.androidx.room.paging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

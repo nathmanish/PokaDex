@@ -19,7 +19,6 @@ fun PokeGridWidget(
         items(pokeList.itemCount) { index ->
             val pokeData = pokeList[index]
             pokeData?.let {
-                pokeData.id = index
                 PokeGridItem(it)
             }
         }

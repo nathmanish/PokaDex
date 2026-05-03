@@ -2,10 +2,10 @@ package com.mn.features.di
 
 import com.mn.core.networkclient.NetworkClient
 import com.mn.features.data.PokeApiService
-import com.mn.features.data.mediator.PokeListMediator
+import com.mn.features.data.database.AppDatabase
+import com.mn.features.data.mediator.PokeRemoteMediator
 import com.mn.features.data.repositories.PokeListRepository
 import com.mn.features.data.repositories.PokeListRepositoryImpl
-import com.mn.features.domain.mappers.PokeListMapper
 import com.mn.features.domain.usecases.PokeListUseCase
 import com.mn.features.domain.usecases.PokeListUseCaseImpl
 import dagger.Module
@@ -26,23 +26,27 @@ class HomeModule {
 
     @Provides
     @ViewModelScoped
-    fun providesPokeListMediator(pokeApiService: PokeApiService): PokeListMediator =
-        PokeListMediator(pokeApiService)
-
-    @Provides
-    @ViewModelScoped
-    fun providesPokeListRepository(pokeListMediator: PokeListMediator): PokeListRepository =
-        PokeListRepositoryImpl(pokeListMediator)
-
-    @Provides
-    @ViewModelScoped
-    fun providesPokeListMapper(): PokeListMapper = PokeListMapper()
+    fun providesPokeListRepository(
+        pokeRemoteMediator: PokeRemoteMediator,
+        appDatabase: AppDatabase
+    ): PokeListRepository =
+        PokeListRepositoryImpl(pokeRemoteMediator, appDatabase)
 
     @Provides
     @ViewModelScoped
     fun providesPokeListUseCase(
         pokeListRepository: PokeListRepository,
-        pokeListMapper: PokeListMapper
     ): PokeListUseCase =
-        PokeListUseCaseImpl(pokeListRepository, pokeListMapper)
+        PokeListUseCaseImpl(pokeListRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun providesPokeRemoteMediator(
+        pokeApiService: PokeApiService,
+        pokeDatabase: AppDatabase
+    ): PokeRemoteMediator = PokeRemoteMediator(
+        pokeApiService,
+        pokeDatabase
+    )
+
 }
